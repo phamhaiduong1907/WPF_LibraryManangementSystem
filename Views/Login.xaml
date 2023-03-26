@@ -1,0 +1,70 @@
+﻿<Window x:Class="LibraryManagementSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagementSystem"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="800"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:components="clr-namespace:LibraryManagementSystem.Components">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Resources/background.jpg" />
+        </Grid.Background>
+        <Grid Opacity="0.5"
+              Background="Black">
+        </Grid>
+        <Grid>
+            <DockPanel HorizontalAlignment="Center"
+                       Width="270"
+                       Margin="0,80,0,120">
+                <DockPanel.Background>
+                    <SolidColorBrush  Color="White" Opacity="0.4"/>
+                </DockPanel.Background>
+                <materialDesign:PackIcon Kind="BookOpenPageVariant"
+                                         HorizontalAlignment="Center"
+                                         Width="50"
+                                         Height="50"
+                                         DockPanel.Dock="Top" />
+                <TextBlock Name="lbTitle"
+                           Foreground="#ffffff"
+                           FontWeight="DemiBold"
+                           HorizontalAlignment="Center"
+                           FontSize="15"
+                           DockPanel.Dock="Top"
+                           Text="Welcome to library management system"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center">
+                </TextBlock>
+                <!---->
+                <TextBox x:Name="txtUser"
+                         Background="White"
+                         materialDesign:HintAssist.Hint="Student code or Username ..."
+                         Width="200"
+                         Height="30"
+                         Margin="10"
+                         Text="{Binding Student.Studentcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         DockPanel.Dock="Top" />
+                <!---->
+                <components:BindablePasswordBox Background="White"
+                                                materialDesign:HintAssist.Hint="Password"
+                                                Width="200"
+                                                Height="30"
+                                                Margin="10"
+                                                DockPanel.Dock="Top"
+                                                Password="{Binding Student.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <!---->
+                <Button Name="btnLogin"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Width="100"
+                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                        Content="Login"
+                        DockPanel.Dock="Top"
+                        Command="{Binding LoginCommand}" />
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>

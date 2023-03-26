@@ -1,0 +1,342 @@
+﻿<Window x:Class="LibraryManagementSystem.Views.ListRequest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagementSystem.Views"
+        mc:Ignorable="d"
+        Title="Discover Our Library"
+        Width="1500"
+        Height="800"
+        WindowStartupLocation="CenterScreen"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:utility="clr-namespace:LibraryManagementSystem.Utility"
+        xmlns:utility1="clr-namespace:LibraryManagementSystem.Utility.Converter">
+    <Window.Resources>
+        <utility:IsEnabledConverter x:Key="enableconverter"></utility:IsEnabledConverter>
+        <utility:InverseConverter x:Key="inverseconverter"></utility:InverseConverter>
+        <utility:AcceptedConverter x:Key="acceptedconverter"></utility:AcceptedConverter>
+        <utility:StatusConverter x:Key="statusconverter"></utility:StatusConverter>
+        <utility1:MultiParamConverter x:Key="multiparamconverter"></utility1:MultiParamConverter>
+        <utility1:TextReasonVisibilityConverter x:Key="noteTextConverter"></utility1:TextReasonVisibilityConverter>
+        <utility1:UpdateNoteButtonVisibilityConverter x:Key="noteBtnConverter"></utility1:UpdateNoteButtonVisibilityConverter>
+        <utility1:ActionButtonVisibilityConverter x:Key="actBtnConverter"></utility1:ActionButtonVisibilityConverter>
+        <utility1:CheckoutButtonVisibilityConverter x:Key="checkBtnConverter"></utility1:CheckoutButtonVisibilityConverter>
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Resources/background.jpg" />
+        </Grid.Background>
+        <Grid Opacity="0.5"
+              Background="Black">
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="250"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <DockPanel Background="#5834A0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2">
+                <TextBlock Text="{Binding Username}"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           Margin="15,0,0,0"
+                           x:Name="tbWelcome"
+                           HorizontalAlignment="Left" />
+                <StackPanel Orientation="Horizontal"
+                            Width="1000"
+                            HorizontalAlignment="Center"
+                            Margin="55,0,0,0">
+                    <Button Content="Explore our library"
+                            Margin="150,0,150,0"
+                            Command="{Binding ReturnHomeCommand}"/>
+                    <Button Content="Book request"
+                            IsEnabled="False"
+                            Margin="250,0,20,0">
+                    </Button>
+                </StackPanel>
+                <Button HorizontalAlignment="Right"
+                        Margin="0,0,15,0"
+                        Command="{Binding LogoutCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ExitToApp"
+                                                 VerticalAlignment="Center" />
+                        <TextBlock Text="Exit"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </DockPanel>
+            <Grid Grid.Row="1"
+                  Grid.ColumnSpan="3"
+                  Margin="20,20,20,20">
+                <Grid.Background>
+                    <SolidColorBrush Color="White"
+                                     Opacity="0.7" />
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                            Orientation="Horizontal">
+                    <CheckBox Content="Request Date"
+                              Margin="5,0,0,0"
+                              IsChecked="{Binding RequestDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Content="Borrow Date"
+                              Margin="5,0,0,0"
+                              IsChecked="{Binding BorrowDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Content="Due Date"
+                              Margin="5,0,0,0"
+                              IsChecked="{Binding DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Content="Return Date"
+                              Margin="5,0,0,0"
+                              IsChecked="{Binding ReturnDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <DatePicker materialDesign:HintAssist.Hint="Select a date"
+                            Width="330"
+                            x:Name="dpkChosenDate"
+                            Grid.Column="4"
+                            Grid.ColumnSpan="2"
+                            IsEnabled="{Binding IsChosenDateEnabled}"
+                            SelectedDate="{Binding ChosenDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                    
+                </DatePicker>
+                <DatePicker materialDesign:HintAssist.Hint="Start Date"
+                            Width="150"
+                            x:Name="dpkStartdate"
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            IsEnabled="{Binding IsStartdateEnabled}"
+                            SelectedDate="{Binding Startdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                <DatePicker materialDesign:HintAssist.Hint="End Date"
+                            Width="150"
+                            x:Name="dpkEnddate"
+                            Grid.Row="1"
+                            Grid.Column="5"
+                            IsEnabled="{Binding IsEnddateEnabled}"
+                            SelectedDate="{Binding Enddate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                <CheckBox Content="Find on an interval" Grid.RowSpan="2"
+                          Grid.Column="6"
+                          x:Name="cbInterval"
+                          IsChecked="{Binding IsOnInterval, Mode=TwoWay}"
+                          HorizontalAlignment="Center"/>
+                <TextBox materialDesign:HintAssist.Hint="Type in the student code ..."
+                         Width="330"
+                         Grid.Row="2"
+                         Grid.Column="2"
+                         Grid.ColumnSpan="2"
+                         Margin="0"
+                         VerticalContentAlignment="Center"
+                         IsReadOnly="{Binding IsStudentCodeInputReadonly}"
+                         Text="{Binding StudentCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox materialDesign:HintAssist.Hint="Type in the book name ..."
+                         Width="330"
+                         Margin="0"
+                         Grid.Row="2"
+                         Grid.Column="4"
+                         Text="{Binding Bookname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalContentAlignment="Center"
+                         Grid.ColumnSpan="2"/>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="3"
+                            Grid.Column="3">
+                    <Label Content="Request Status"
+                           Margin="0,0,15,0"
+                           VerticalContentAlignment="Center"/>
+                    <ComboBox x:Name="cmbRequestStatus"
+                              Margin="0,0,0,0"
+                              IsEnabled="{Binding ElementName=cmbBorrowStatus, 
+                                            Path=SelectedIndex, 
+                                            Converter={StaticResource enableconverter},
+                                            UpdateSourceTrigger=PropertyChanged}"
+                              SelectedIndex="{Binding RequestStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem IsSelected="True">All</ComboBoxItem>
+                        <ComboBoxItem>Pending</ComboBoxItem>
+                        <ComboBoxItem>Approved</ComboBoxItem>
+                        <ComboBoxItem>Rejected</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="3"
+                            Grid.Column="4">
+                    <Label Content="Borrow Status"
+                           Margin="0,0,15,0"
+                           VerticalContentAlignment="Center"/>
+                    <ComboBox x:Name="cmbBorrowStatus"
+                              IsEnabled="{Binding ElementName=cmbRequestStatus, 
+                        Path=SelectedIndex, Converter={StaticResource enableconverter},
+                        UpdateSourceTrigger=PropertyChanged}"
+                              SelectedIndex="{Binding BorrowStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem IsSelected="True">All</ComboBoxItem>
+                        <ComboBoxItem>Borrowing</ComboBoxItem>
+                        <ComboBoxItem>Returned</ComboBoxItem>
+                        <ComboBoxItem>Overdue</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Row="4"
+                            Grid.Column="3"
+                            Grid.ColumnSpan="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Button HorizontalAlignment="Center"
+                            Margin="0"
+                            Command="{Binding SearchCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Magnify"
+                                                     VerticalAlignment="Center" />
+                            <TextBlock Text="Search"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Center"
+                            Margin="10,0,0,0"
+                            Command="{Binding ClearCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Autorenew" 
+                                                     VerticalAlignment="Center"/>
+                            <TextBlock Text="Clear"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            
+            <Grid Grid.Row="2" Grid.ColumnSpan="2"
+                  Margin="20,0,20,20">
+                <Grid.Background>
+                    <SolidColorBrush Color="White"
+                                     Opacity="0.8" />
+                </Grid.Background>
+                <ListView x:Name="lvRequests"
+                          ItemsSource="{Binding BorrowedInfoList}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Book Name"
+                                            Width="300"
+                                            DisplayMemberBinding="{Binding BookNavigation.Bookname}"/>
+                            <GridViewColumn Header="Borrower"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding StudentNavigation.Name}" />
+                            <GridViewColumn Header="Student Code"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Studentcode}" />
+                            <GridViewColumn Header="Request Date"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Requestdate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            <GridViewColumn Header="Borrow Date"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Borrowdate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            <GridViewColumn Header="Due Date"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Duedate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            <GridViewColumn Header="Return Date"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Returndate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            <GridViewColumn Header="Quantity"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Quantity}" />
+                            <GridViewColumn Header="Borrow Status"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Status, Converter={StaticResource statusconverter}}" />
+                            
+                            <!-- ADMIN -->
+                            <!-- If request is pending then show button for approve/reject action -->
+                            <!-- Else show the text "Approved"/"Rejected" -->
+                            
+                            <!-- STUDENT -->
+                            <!-- Only see status text "Approved"/"Rejected"/"Pending" of their own request -->
+                            <!--Width="{Binding RequestStatusVisibility}"-->
+                            <GridViewColumn Header="Request Status"
+                                            Width="{Binding RequestStatusVisibility}"
+                                            DisplayMemberBinding="{Binding IsAccepted, Converter={StaticResource acceptedconverter}}" />
+                            <!--Width="{Binding ActionColumnVisibility}"-->
+                            <GridViewColumn Header="Action"
+                                            Width="{Binding ActionColumnVisibility}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!---->
+                                            <Button HorizontalAlignment="Right"
+                                                    Background="Red"
+                                                    Margin="5,0,0,0"
+                                                    Command="{Binding DataContext.RejectRequestCommand,
+                                                RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}"
+                                                    CommandParameter="{Binding BorrowedId}"
+                                                    Visibility="{Binding IsAccepted, Converter={StaticResource actBtnConverter}}">
+                                                <Button.BorderBrush>
+                                                    <SolidColorBrush Color="Red" />
+                                                </Button.BorderBrush>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="CloseOctagon"
+                                                                             VerticalAlignment="Center" />
+                                                    <TextBlock Text="Reject"
+                                                               VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button HorizontalAlignment="Right"
+                                                    Background="#0080ff"
+                                                    Margin="5,0,0,0"
+                                                    Command="{Binding DataContext.ApproveRequestCommand,
+                                                RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}"
+                                                    CommandParameter="{Binding BorrowedId}"
+                                                    Visibility="{Binding IsAccepted, Converter={StaticResource actBtnConverter}}">
+                                                <Button.BorderBrush>
+                                                    <SolidColorBrush Color="#0080ff" />
+                                                </Button.BorderBrush>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Approval"
+                                                                             VerticalAlignment="Center" />
+                                                    <TextBlock Text="Approve"
+                                                               VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button HorizontalAlignment="Right"
+                                                    Background="#00ff40"
+                                                    Margin="5,0,0,0"
+                                                    Command="{Binding DataContext.CheckoutBookCommand,
+                                                RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}"
+                                                    CommandParameter="{Binding BorrowedId}"
+                                                    Visibility="{Binding Status, Converter={StaticResource checkBtnConverter}}">
+                                                <Button.BorderBrush>
+                                                    <SolidColorBrush Color="#00ff40" />
+                                                </Button.BorderBrush>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="CheckboxMarkedCircleOutline"
+                                                                             VerticalAlignment="Center" />
+                                                    <TextBlock Text="Checkout"
+                                                               VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
